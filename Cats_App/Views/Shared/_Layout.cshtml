@@ -13,7 +13,7 @@
             xhr.open('GET', elem1, false);
             xhr.send();
             if (xhr.responseText == "net::ERR_NAME_NOT_RESOLVED") {
-                image.src = "https://http.cat/503"
+                image.src = "https://http.cat/503.jpg"
             }
             else {
                 let response_cats = await fetch('https://http.cat/' + xhr.status + '.jpg')
