@@ -2,28 +2,42 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title>CodesCats</title>
-    <script>
-        async function isResponse() {
-            var xhr = new XMLHttpRequest();
-            var image = document.getElementById("image");
-            var elem1 = document.getElementById('elem1').value;
-            xhr.open('GET', elem1, false);
-            xhr.send();
-            if (xhr.responseText == "net::ERR_NAME_NOT_RESOLVED") {
-                image.src = "https://http.cat/503.jpg"
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width" />
+<title>CodesCats</title>
+<script>
+    function contains(arr, elem) {
+        return arr.find((i) => i === elem) != -1;
+    }
+    async function isResponse() {
+        var codes_ch = ['https://http.cat/503.jpg']
+        var xhr = new XMLHttpRequest();
+        let response_cats
+        var image = document.getElementById("image");
+        var elem1 = document.getElementById('elem1').value;
+        xhr.open('GET', elem1, false);
+        xhr.send();
+        if (xhr.responseText == "net::ERR_NAME_NOT_RESOLVED") {
+            image.src = codes_ch[0]
+        }
+        else {
+            url_cat = 'https://http.cat/' + xhr.status + '.jpg'
+            if (contains(codes_ch, url_cat) == false) {
+                response_cats = await fetch(codes_ch[codes_ch.indexOf(url_cat)])
+                image.src = response_cats
             }
             else {
-                let response_cats = await fetch('https://http.cat/' + xhr.status + '.jpg')
+                response_cats = await fetch(url_cat)
+                codes_ch.push(url_cat)
                 image.src = response_cats.url
-                console.log(response_cats)
+                console.log(codes_ch)
             }
             
-            
         }
-    </script>
+        
+
+    }
+</script>
 </head>
 
 <body>
